@@ -3,5 +3,5 @@ repos:
     url: https://github.com/urfave/cli
     ref: master
   - path: b
-    url: https://github.com/github/gitignore
+    url: https://github.com/GitbookIO/javascript
     ref: master
