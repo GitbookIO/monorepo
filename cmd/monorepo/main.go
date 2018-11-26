@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/GitbookIO/monorepo"
@@ -30,10 +31,10 @@ func main() {
 			EnvVar: "MONOREPO_FORCE",
 		},
 		cli.StringFlag{
-			Name: "root",
-			Usage: "Path to the root of the monorepo",
+			Name:   "root",
+			Usage:  "Path to the root of the monorepo",
 			EnvVar: "MONOREPO_ROOT",
-		}
+		},
 	}
 
 	// Subcommands
@@ -42,19 +43,50 @@ func main() {
 			Name:      "list",
 			ShortName: "ls",
 			Action: func(ctx *cli.Context) error {
-				return nil
+				return withRepo(ctx, func(r *repo.Repo) error {
+					return r.List()
+				})
 			},
 		},
 		{
-			Name: "pull",
+			Name:      "pull",
+			ArgsUsage: "[subrepo] [path] [ref]",
 			Action: func(ctx *cli.Context) error {
-				return nil
+				args := ctx.Args()
+				url := args.Get(0)
+				subkey := args.Get(1)
+				ref := args.Get(2)
+
+				// Pull all
+				if url == "" && subkey == "" && ref == "" {
+					return withRepo(ctx, func(r *repo.Repo) error {
+						return r.Pull(ctx.Bool("force"))
+					})
+				}
+
+				// Update existing
+				if url != "" && subkey == "" && ref == "" {
+					return withRepo(ctx, func(r *repo.Repo) error {
+						return r.PullSub(url, ctx.Bool("force"))
+					})
+				}
+
+				// Add new
+				if url != "" && subkey != "" {
+					return withRepo(ctx, func(r *repo.Repo) error {
+						return r.Add(url, subkey, ref)
+					})
+				}
+
+				return fmt.Errorf("Invalid args")
 			},
 		},
 		{
 			Name: "add",
 			Action: func(ctx *cli.Context) error {
-
+				return withRepo(ctx, func(r *repo.Repo) error {
+					return r.Add("https://github.com/urfave/cli", "a", "master")
+				})
 			},
 		},
 		{
@@ -71,8 +103,22 @@ func main() {
 
 	// Run and exit on failure
 	if err := app.Run(os.Args); err != nil {
+		fmt.Println("Failed:", err.Error())
 		os.Exit(1)
 	}
+}
+
+func withRepo(ctx *cli.Context, fn func(r *repo.Repo) error) error {
+	// Open repo
+	r, err := repo.Open(getRoot(ctx))
+	if err != nil {
+		return err
+	}
+	// Do func
+	if err := fn(r); err != nil {
+		return err
+	}
+	return nil
 }
 
 func getRoot(ctx *cli.Context) string {
