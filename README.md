@@ -15,6 +15,24 @@
 
 # CI
 
+You can use a CI system like Travis to automate syncing between your monorepo and sub repos.
+
+## 1. Setup each subrepo to pull in new updates:
+```
+git clone https://github.com/org/bigrepo
+cd bigrepo
+monorepo pull
+monorepo commit
+git push
+```
+
+## 2. Setup monorepo to dispatch changes
+
+```
+cd bigrepo
+monorepo push
+```
+
 # Usage
 
 ```
@@ -42,6 +60,18 @@ GLOBAL OPTIONS:
    --root value   Path to the root of the monorepo [$MONOREPO_ROOT]
    --help, -h     show help
    --version, -v  print the version
+```
+
+## `monofile.yml`
+
+```yaml
+- repos:
+    - path: folder1
+      url: https://github.com/org/repo1
+      ref: master
+    - path: folder2
+      url: https://github.com/org/repo2
+      ref: v2
 ```
 
 # Notes
