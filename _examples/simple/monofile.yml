@@ -1,0 +1,7 @@
+repos:
+  - path: a
+    url: https://github.com/urfave/cli
+    ref: master
+  - path: b
+    url: https://github.com/github/gitignore
+    ref: master
