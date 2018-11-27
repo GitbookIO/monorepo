@@ -22,7 +22,8 @@ You can use a CI system like Travis to automate syncing between your monorepo an
 git clone https://github.com/org/bigrepo
 cd bigrepo
 monorepo pull
-monorepo commit
+git add .
+git commit -am "Update"
 git push
 ```
 
