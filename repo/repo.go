@@ -25,8 +25,8 @@ type Repo struct {
 }
 
 func Open(dir string) (*Repo, error) {
-	mpath := path.Join(dir, "monofile.yml")
-	lpath := path.Join(dir, "monofile.lock")
+	mpath := path.Join(dir, "monorepo.yml")
+	lpath := path.Join(dir, "monorepo.lock")
 
 	// Read monofile.yml
 	m, err := monofile.ReadFile(mpath)
