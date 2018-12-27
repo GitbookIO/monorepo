@@ -1,4 +1,4 @@
 package monorepo
 
 // VERSION is monorepo's semver
-const VERSION = "0.0.0"
+const VERSION = "0.0.1"
