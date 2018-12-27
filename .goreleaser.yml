@@ -1,0 +1,21 @@
+build:
+  main: cmd/monorepo/main.go
+  binary: monorepo
+  goos:
+    - darwin
+    - linux
+    - windows
+    - freebsd
+    - netbsd
+    - openbsd
+  goarch:
+    - amd64
+    - 386
+archive:
+  format: zip
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^refactor'
