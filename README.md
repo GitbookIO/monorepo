@@ -7,10 +7,10 @@
 # Setup
 
 1. Start with a new (empty) repo to be your monorepo
-2. Add a `monofile.yml` (see [_examples/simple](https://github.com/GitbookIO/monorepo/tree/master/_examples/simple))
+2. Add a `monorepo.yml` (see [_examples/simple](https://github.com/GitbookIO/monorepo/tree/master/_examples/simple))
 3. Run `monorepo pull`
     - This will pull the files from the subrepos
-    - Creaate `monofile.lock` with the specific SHAs pulled in
+    - Creaate `monorepo.lock` with the specific SHAs pulled in
 4. Commit the monorepo (e.g: `git commit -am "Initial pull"`)
 
 # CI
@@ -63,7 +63,7 @@ GLOBAL OPTIONS:
    --version, -v  print the version
 ```
 
-## `monofile.yml`
+## `monorepo.yml`
 
 ```yaml
 - repos:

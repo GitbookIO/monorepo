@@ -28,7 +28,7 @@ func Open(dir string) (*Repo, error) {
 	mpath := path.Join(dir, "monorepo.yml")
 	lpath := path.Join(dir, "monorepo.lock")
 
-	// Read monofile.yml
+	// Read monorepo.yml
 	m, err := monofile.ReadFile(mpath)
 	if err != nil {
 		return nil, err
