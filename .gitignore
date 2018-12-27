@@ -1,3 +1,5 @@
 .cache/
 # Checked out examples
 _examples/*/*/
+# Go Releaser dist/
+/dist/
